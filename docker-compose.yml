@@ -56,19 +56,19 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
-  # schema-registry:
-  #   image: confluentinc/cp-schema-registry
-  #   networks: 
-  #     - kafka-net
-  #   depends_on:
-  #     - zookeeper
-  #     - kafka
-  #   restart: always
-  #   environment:
-  #     SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'PLAINTEXT://kafka:29092'
-  #     SCHEMA_REGISTRY_HOST_NAME: 'schema-registry'
-  #     SCHEMA_REGISTRY_LISTENERS: 'http://0.0.0.0:8085'
-  #     SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: 'INFO'
+  schema-registry:
+    image: confluentinc/cp-schema-registry
+    networks: 
+      - kafka-net
+    depends_on:
+      - zookeeper
+      - kafka
+    restart: always
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'PLAINTEXT://kafka:29092'
+      SCHEMA_REGISTRY_HOST_NAME: 'schema-registry'
+      SCHEMA_REGISTRY_LISTENERS: 'http://0.0.0.0:8085'
+      SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: 'INFO'
 
 networks: 
   kafka-net:
