@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Documents\\Github\\dotnetcore-kafka\\api-pratica-modelo\\src\\Transacoes\\Transacao.API.csproj": {}
+    "C:\\Users\\User\\Documents\\Github\\dotnetcore-kafka\\src\\Transacoes\\Transacao.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Documents\\Github\\dotnetcore-kafka\\api-pratica-modelo\\src\\Transacoes\\Transacao.API.csproj": {
+    "C:\\Users\\User\\Documents\\Github\\dotnetcore-kafka\\src\\Transacoes\\Transacao.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Documents\\Github\\dotnetcore-kafka\\api-pratica-modelo\\src\\Transacoes\\Transacao.API.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Documents\\Github\\dotnetcore-kafka\\src\\Transacoes\\Transacao.API.csproj",
         "projectName": "Transacao.API",
-        "projectPath": "C:\\Users\\User\\Documents\\Github\\dotnetcore-kafka\\api-pratica-modelo\\src\\Transacoes\\Transacao.API.csproj",
+        "projectPath": "C:\\Users\\User\\Documents\\Github\\dotnetcore-kafka\\src\\Transacoes\\Transacao.API.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Documents\\Github\\dotnetcore-kafka\\api-pratica-modelo\\src\\Transacoes\\obj\\",
+        "outputPath": "C:\\Users\\User\\Documents\\Github\\dotnetcore-kafka\\src\\Transacoes\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

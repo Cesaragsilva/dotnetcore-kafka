@@ -32,14 +32,12 @@ namespace Transacao.API
             services.AddScoped(o=> new ProducerConfig {
                 BootstrapServers = Configuration["Kafka:BootstrapServers"]
             });
-            services.AddScoped(o => new ConsumerConfig
+            services.AddSingleton(o => new ConsumerConfig
             {
                 GroupId = "Transacoes-consumer-group",
                 BootstrapServers = Configuration["Kafka:BootstrapServers"],
-                AutoOffsetReset = AutoOffsetReset.Earliest
+                AutoOffsetReset = AutoOffsetReset.Latest
             });
-            //services.AddHostedService<EventosHandler>();
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -47,7 +45,7 @@ namespace Transacao.API
             });
 
             services.AddHealthChecks()
-                    .AddUrlGroup(new Uri(Configuration["Servicos:Url"]), "Dependencia"); ;
+                    .AddUrlGroup(new Uri(Configuration["Servicos:Url"]), "Dependencia");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

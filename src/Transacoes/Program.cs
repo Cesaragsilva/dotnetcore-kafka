@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Transacao.API.BackgroundServices;
 using Transacao.API.Configuration;
 
 namespace Transacao.API
@@ -18,6 +20,10 @@ namespace Transacao.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureServices(services =>
+                {
+                    services.AddHostedService<EventosHandler>();
                 });
     }
 }

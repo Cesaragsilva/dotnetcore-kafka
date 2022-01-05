@@ -11,9 +11,11 @@ namespace Transacao.API.BackgroundServices
     public class EventosHandler : IHostedService
     {
         private readonly ILogger<EventosHandler> _logger;
-        private readonly ConsumerConfig _consumerConfig;
         private readonly IConfiguration _configuration;
-        public EventosHandler(ILogger<EventosHandler> logger, ConsumerConfig consumerConfig, IConfiguration configuration)
+        private readonly ConsumerConfig _consumerConfig;
+        public EventosHandler(ILogger<EventosHandler> logger,
+            IConfiguration configuration,
+            ConsumerConfig consumerConfig)
         {
             _logger = logger;
             _consumerConfig = consumerConfig;
@@ -21,17 +23,22 @@ namespace Transacao.API.BackgroundServices
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            _logger.LogInformation($"Consumidor iniciado - Topico: {_configuration["Kafka:Topicos:Transacoes"]}");
             using (var c = new ConsumerBuilder<Ignore, string>(_consumerConfig).Build())
             {
-                c.Subscribe(_configuration["Kafka:Topicos:Transacoes"]);
-                var cts = new CancellationTokenSource();
+                if (Convert.ToBoolean(_configuration["Kafka:Topicos:ConsumirMensagensAntigas"])) //If utilizado para consumir mensagens antigas
+                    c.Assign(new TopicPartitionOffset(new TopicPartition(_configuration["Kafka:Topicos:Transacoes"],
+                                                            Convert.ToInt32(_configuration["Kafka:Topicos:PartitionGroup"])),
+                                                     new Offset(Convert.ToInt32(_configuration["Kafka:Topicos:OffSet"]))));
+                else
+                    c.Subscribe(_configuration["Kafka:Topicos:Transacoes"]);
 
                 try
                 {
-                    while (true)
+                    while (!cancellationToken.IsCancellationRequested)
                     {
-                        var message = c.Consume(cts.Token);
-                        _logger.LogInformation($"Mensagem: {message.Message.Value} recebida de {message.TopicPartitionOffset}");
+                        var message = c.Consume(cancellationToken);
+                        _logger.LogInformation($"Mensagem Recebida: {message.Message.Value} recebida de {message.TopicPartitionOffset}");
                     }
                 }
                 catch (OperationCanceledException)
@@ -45,6 +52,7 @@ namespace Transacao.API.BackgroundServices
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            _logger.LogInformation($"Consumidor parado - Topico: {_configuration["Kafka:Topicos:Transacoes"]}");
             return Task.CompletedTask;
         }
     }
